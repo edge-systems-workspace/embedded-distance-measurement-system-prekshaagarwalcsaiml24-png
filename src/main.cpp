@@ -1,59 +1,34 @@
-#include <Arduino.h>
-/**
- * @file main.cpp
- * @brief Embedded Distance Measurement using Ultrasonic Sensor
- * @author YOUR_NAME
- * @date YYYY-MM-DD
- *
- * @details
- * Measures distance using HC-SR04 ultrasonic sensor
- * and displays structured output via Serial Monitor.
- */
+const int trigPin = 9;
+const int echoPin = 10;
 
- // TODO 1:
- // Define TRIG pin (Use pin 9)
-
- // TODO 2:
- // Define ECHO pin (Use pin 10)
-
- // TODO 3:
- // Create variable to store duration
-
- // TODO 4:
- // Create variable to store calculated distance
+long duration;
+float distance;
 
 void setup() {
-
-    // TODO 5:
-    // Initialize Serial communication (9600 baud rate)
-
-    // TODO 6:
-    // Configure TRIG as OUTPUT
-
-    // TODO 7:
-    // Configure ECHO as INPUT
-
-    // TODO 8:
-    // Print system initialization message
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
+  // Clear trig pin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
 
-    // TODO 9:
-    // Set TRIG LOW for 2 microseconds
+  // Send 10 microsecond pulse
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
 
-    // TODO 10:
-    // Send 10 microsecond pulse on TRIG
+  // Read echo time
+  duration = pulseIn(echoPin, HIGH);
 
-    // TODO 11:
-    // Measure pulse duration on ECHO using pulseIn()
+  // Calculate distance (cm)
+  distance = duration * 0.034 / 2;
 
-    // TODO 12:
-    // Calculate distance in cm
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
 
-    // TODO 13:
-    // Print calculated distance
-
-    // TODO 14:
-    // Add delay (500ms)
+  delay(500);
 }
